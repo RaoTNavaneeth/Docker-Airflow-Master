@@ -49,21 +49,21 @@ Email with Attachments
 
 docker-airflow-master/
 │
-├── dags/
-│ └── store_DAG.py
+├──> dags/
+│ └──> store_DAG.py
 │
-├── sql_files/
-│ ├── create_table.sql
-│ ├── insert_into_table.sql
-│ └── select_from_table.sql
+├──> sql_files/
+│ ├──> create_table.sql
+│ ├──> insert_into_table.sql
+│ └──> select_from_table.sql
 │
-├── store_files/
-│ ├── raw_store_transactions.csv
-│ └── (generated report files)
+├──> store_files/
+│ ├──> raw_store_transactions.csv
+│ └──> (generated report files)
 │
-├── mysql.cnf
-├── docker-compose-LocalExecutor.yml
-└── README.md
+├──> mysql.cnf
+├──> docker-compose-LocalExecutor.yml
+└──> README.md
 
 
 ---
