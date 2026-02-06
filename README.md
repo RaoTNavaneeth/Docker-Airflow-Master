@@ -120,10 +120,9 @@ move_file2 ─┘
 ---
 
 ## 🛠️ Setup Instructions
-
-### 1️⃣ Start Services
-
 ```bash
+1️⃣ Start Services
+Install Docker Desktop(On Mac) and run a conatainer named "Docker-Airflow-Master"
 cd docker-airflow-master
 docker compose -f ./docker-compose-LocalExecutor.yml up -d
 2️⃣ Create Airflow Admin User
@@ -138,7 +137,6 @@ airflow users create \
 3️⃣ Access Airflow UI
 http://localhost:8080
 Login:
-
 username: airflow
 password: airflow
 🔐 Airflow Connection Setup
