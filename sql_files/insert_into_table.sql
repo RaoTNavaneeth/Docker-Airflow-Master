@@ -1,0 +1,7 @@
+LOAD DATA INFILE '/store_files/clean_store_transactions.csv'
+INTO TABLE clean_store_transactions
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(STORE_ID, STORE_LOCATION, PRODUCT_CATEGORY, PRODUCT_ID, MRP, CP, DISCOUNT, SP, txn_date);

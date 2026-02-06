@@ -1,0 +1,87 @@
+version: "3.9"
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.7.3
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+
+    # 🔑 REQUIRED for log access
+    AIRFLOW__WEBSERVER__SECRET_KEY: "_XWHSyJdhAFmSVoDjfigp4AIXZBZq-H8c3Out8t2si8="
+
+    # Optional but recommended (can keep empty for now)
+    AIRFLOW__CORE__FERNET_KEY: ""
+    AIRFLOW__LOGGING__ENABLE_TASK_LOG_READER: "true"
+    AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
+
+     # 📧 SMTP CONFIG (ADD THIS 👇)
+     # For Google App password go to my account setting google,set up 2 step verification and generate App password
+    AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+    AIRFLOW__SMTP__SMTP_PORT: 587
+    AIRFLOW__SMTP__SMTP_USER: <<Your Email ID>
+    AIRFLOW__SMTP__SMTP_PASSWORD: <<Your Google App password >>
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: <<Your Email ID>
+    AIRFLOW__SMTP__SMTP_STARTTLS: "True"
+    AIRFLOW__SMTP__SMTP_SSL: "False"
+
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./store_files:/store_files
+  depends_on:
+    - postgres
+
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./store_files:/store_files
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command: >
+      -c "airflow db migrate &&
+          airflow users create
+          --username airflow
+          --password airflow
+          --firstname Airflow
+          --lastname Admin
+          --role Admin
+          --email admin@example.com"
+
+  webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./sql_files:/opt/airflow/sql
+      - ./store_files:/store_files
+
+  scheduler:
+    <<: *airflow-common
+    command: scheduler
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./sql_files:/opt/airflow/sql
+      - ./store_files:/store_files
+
+volumes:
+  mysql_data:
+
