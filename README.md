@@ -47,6 +47,7 @@ Email with Attachments
 
 ## 📁 Project Structure
 
+```text
 docker-airflow-master/
 │
 ├──> dags/
@@ -65,7 +66,7 @@ docker-airflow-master/
 ├──> docker-compose-LocalExecutor.yml
 └──> README.md
 
-
+```
 ---
 
 ## 🔄 DAG Workflow
