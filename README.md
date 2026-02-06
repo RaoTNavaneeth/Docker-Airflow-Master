@@ -125,6 +125,7 @@ move_file2 ─┘
 Install Docker Desktop(On Mac) and run a conatainer named "Docker-Airflow-Master"
 cd docker-airflow-master
 docker compose -f ./docker-compose-LocalExecutor.yml up -d
+
 2️⃣ Create Airflow Admin User
 docker exec -it docker-airflow-master-webserver-1 bash
 airflow users create \
@@ -134,6 +135,7 @@ airflow users create \
   --lastname Admin \
   --role Admin \
   --email admin@example.com
+
 3️⃣ Access Airflow UI
 http://localhost:8080
 Login:
@@ -149,16 +151,23 @@ Host	mysql
 Schema	airflow_mysql
 Login	root
 Password	root
-Port	3306
+Port	3307
+
 🧪 Database Initialization (One-time)
 docker exec -it docker-airflow-master-mysql-1 mysql -u root -proot
 CREATE DATABASE airflow_mysql;
+
 📧 Email Reporting
+
+Google -> My accounts -> Enable 2 Factor authentication -> Generate App Password (16 characters)
+
 Uses Airflow EmailOperator
 
 Sends daily profit CSV reports as attachments
 
 Fully automated post-success
+
+
 
 ✅ Final Outcome
 End-to-end ETL pipeline
