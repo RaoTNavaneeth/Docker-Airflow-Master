@@ -16,7 +16,7 @@ The pipeline:
 ---
 
 ## 🏗️ Architecture
-
+```
 Raw CSV
 ↓
 Airflow DAG
@@ -31,7 +31,7 @@ CSV Reports
 ↓
 Email with Attachments
 
-
+```
 ---
 
 ## 🐳 Tech Stack
